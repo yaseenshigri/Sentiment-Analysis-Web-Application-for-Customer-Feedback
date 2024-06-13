@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Link to Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <ul class="navbar-left">
+                <li><a href="{{ url_for('index') }}"><i class="fas fa-home"></i> Home</a></li>
+            </ul>
+            <ul class="navbar-right">
+                <li><a href="{{ url_for('about') }}"><i class="fas fa-info-circle"></i> About</a></li>
+                <li><a href="{{ url_for('contact') }}"><i class="fas fa-envelope"></i> Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <h1>Contact Us</h1>
+        <p><i class="fas fa-phone-alt"></i> Phone: +82 234 567 890</p>
+        <p><i class="fas fa-envelope"></i> Email: abc@gmail.com</p>
+        <p><i class="fas fa-fax"></i> Fax: +82 987 654 321</p>
+    </div>
+    <footer class="footer">
+        <p>Address: SC Lab, Inje University, South Korea</p>
+        <p>Contact: +82 234 567 890</p>
+        <p>Email: abc@gmail.com</p>
+    </footer>
+</body>
+</html>

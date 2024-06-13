@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analysis Web App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <ul class="navbar-left">
+                <li><a href="{{ url_for('index') }}"><i class="fas fa-home"></i> Home</a></li>
+            </ul>
+            <ul class="navbar-right">
+                <li><a href="{{ url_for('about') }}"><i class="fas fa-info-circle"></i> About</a></li>
+                <li><a href="{{ url_for('contact') }}"><i class="fas fa-envelope"></i> Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <h1>Sentiment Analysis Web App</h1>
+
+        <form id="sentiment-form">
+            <div class="form-group">
+                <textarea id="text" name="text" class="textarea" placeholder="Enter your text here..."></textarea>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn-analyze">Analyze</button>
+            </div>
+        </form>
+        <div id="result" class="result-container" style="display: block;">
+            <h3>Sentiment</h3>
+        </div>
+    <div class ="sentiment-cotainer">
+        <div class="analysis-result" id="analysis-result"></div>
+        <div id="thank-you" class="thank-you" style="display: none;">
+            <p>Thank you for your positive feedback!</p>
+        </div>
+        <div id="suggestion-box" class="suggestion-box" style="display: none;">
+            <p>We're sorry to hear that. Please leave your suggestion below:</p>
+            <textarea id="suggestion" placeholder="Enter your suggestion here..."></textarea>
+            <button id="submit-suggestion" class="btn-submit">Submit</button>
+        </div>
+    </div>  
+        
+    </div>
+    <footer class="footer">
+        <p>Address: SC Lab, Inje University, South Korea</p>
+        <p>Contact: +82 234 567 890</p>
+        <p>Email: abc@gmail.com</p>
+    </footer>
+
+    <script>
+        document.getElementById('sentiment-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const text = document.getElementById('text').value;
+
+            fetch('/analyze', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ text: text }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                const resultDiv = document.getElementById('result');
+                const analysisResultDiv = document.getElementById('analysis-result');
+                const thankYouDiv = document.getElementById('thank-you');
+                const suggestionBoxDiv = document.getElementById('suggestion-box');
+
+                analysisResultDiv.innerHTML = data.sentiment.text + "<p>" + data.sentiment.image + "</p>";
+                resultDiv.style.display = 'block'
+
+                if (data.sentiment.type === 'positive' || data.sentiment.type === 'very_positive') {
+                    thankYouDiv.style.display = 'block';
+                    suggestionBoxDiv.style.display = 'none';
+                } else if (data.sentiment.type === 'negative' || data.sentiment.type === 'very_negative') {
+                    thankYouDiv.style.display = 'none';
+                    suggestionBoxDiv.style.display = 'block';
+                } else {
+                    thankYouDiv.style.display = 'none';
+                    suggestionBoxDiv.style.display = 'none';
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+
+        document.getElementById('submit-suggestion').addEventListener('click', function() {
+            const suggestion = document.getElementById('suggestion').value;
+            // Here you would typically send the suggestion to your server
+            alert('Suggestion submitted: ' + suggestion);
+        });
+    </script>
+</body>
+</html>
