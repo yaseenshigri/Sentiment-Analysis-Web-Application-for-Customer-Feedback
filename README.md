@@ -1,8 +1,8 @@
-#Overview
+# Overview:
 The project aims to develop a web application that performs sentiment analysis on customer feedback. 
 Using natural language processing and machine learning techniques, the application will classify feedback as positive or negative to help businesses understand customer sentiment.
 
-#Dataset
+# Dataset:
 Source: IMDB Dataset
 Description:
 Consists of 50,000 movie reviews.
